@@ -618,7 +618,10 @@ func (s *Server) Start() (rErr error) {
 	}
 
 	s.stateManager.setState(ServerRunning)
-	return svrStart()
+
+	return wapp.RunWithFatalLogging(ctx, func(ctx context.Context) error {
+		return svrStart()
+	})
 }
 
 type configurableRouterImpl struct {
